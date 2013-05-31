@@ -22,8 +22,6 @@ class Caller extends Logging{
 	  Http(call OK as.String)
 	}
 	
-	
-  /* Helpers */
   object Constants {
 	val BASE = "http://www.yr.no/place/"
 	val BY_HOUR = "forecast_hour_by_hour"

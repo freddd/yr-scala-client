@@ -1,17 +1,17 @@
 package com.freddd.yr.models
 
 import java.util.{ArrayList => JList}
-import com.thoughtworks.xstream.annotations.XStreamAsAttribute
+
+import org.joda.time.LocalDateTime
+
 import com.thoughtworks.xstream.annotations.XStreamAlias
-import com.thoughtworks.xstream.annotations.XStreamConverter
-import com.thoughtworks.xstream.converters.extended.ToAttributedValueConverter
-import javax.xml.bind.annotation.XmlAttribute
+import com.thoughtworks.xstream.annotations.XStreamAsAttribute
 
 case class WeatherData(location: Location, credit: Credit, meta: Meta, links: Links, sun: Sun, forecast: Forecast)
 case class Observations(weatherStations: Seq[WeatherStation])
 case class WeatherStation(stno: Integer, sttype: String, name: String, distance: Double, lat: Double, source: String)
 case class Links(links: JList[Link])
-case class Meta(lastupdate: String, nextupdate: String) // XMLGregorianCalendar
+case class Meta(lastupdate: String, nextupdate: String)
 case class Location(name: String, locationType: String, country: String, timezone: Timezone, location: InnerLocation)
 case class Credit(link: Link)
 case class Forecast(text: Text, tabular: Tabular)
@@ -42,18 +42,18 @@ class Link(_text: String, _url:String, _id: String){
 
 class Sun(_rise: String, _set: String){
   @XStreamAsAttribute
-  var rise = _rise
+  var rise: LocalDateTime = LocalDateTime.parse(_rise)
   @XStreamAsAttribute
-  var set = _set
+  var set: LocalDateTime = LocalDateTime.parse(_set)
   
   override def toString = "[Sun: rise= "+rise+" set= "+ set +"]"
 }
 
 class Time(_symbol: Symbol, _precipitation: Precipitation, _windDirection: WindDirection, _windSpeed: WindSpeed, _temperature: Temperature, _pressure: Pressure, _from: String, _to: String, _period: String){
   @XStreamAsAttribute
-  var from = _from
+  var from: LocalDateTime = LocalDateTime.parse(_from)
   @XStreamAsAttribute
-  var to = _to
+  var to: LocalDateTime = LocalDateTime.parse(_to)
   @XStreamAsAttribute
   var period = _period
   
@@ -86,7 +86,7 @@ class WindDirection(_deg: Double, _code: String, _name: String, _time: String){
   @XStreamAsAttribute
   var name = _name
   @XStreamAsAttribute
-  var time = _time
+  var time: LocalDateTime = LocalDateTime.parse(_time)
   
   override def toString = "[WindDirection: deg= "+deg+" code= "+ code +" name= "+ name +" time= "+ time +"]"
 }
@@ -97,7 +97,7 @@ class WindSpeed(_mps: Double, _name: String, _time: String){
   @XStreamAsAttribute
   var name = _name
   @XStreamAsAttribute
-  var time = _time
+  var time: LocalDateTime = LocalDateTime.parse(_time)
   
   override def toString = "[WindSpeed: mps= "+mps+" name= "+ name +" time= "+ time +"]"
 }
@@ -108,7 +108,7 @@ class Temperature(_unit: String, _value: Integer, _time: String){
   @XStreamAsAttribute
   var value = _value
   @XStreamAsAttribute
-  var time = _time
+  var time: LocalDateTime = LocalDateTime.parse(_time)
   
   override def toString = "[Temperature: unit= "+unit+" value= "+ value +" time= "+ time +"]"
 }
@@ -130,7 +130,7 @@ class Symbol(_number: Integer, _name: String, _variable: String, _time: String){
   @XStreamAsAttribute
   var name = _name
   @XStreamAsAttribute
-  var time = _time
+  var time: LocalDateTime = LocalDateTime.parse(_time)
   
   override def toString = "[Symbol: number= "+number+" variable= "+ variable +" name= "+ name +" time= "+ time +"]"
 }

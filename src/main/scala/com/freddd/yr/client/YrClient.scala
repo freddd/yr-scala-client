@@ -67,13 +67,6 @@ class YrClient extends Logging{
     xst.alias("temperature", classOf[Temperature])
     xst.alias("pressure", classOf[Pressure])
     
-    /*
-    xst.useAttributeFor("id", classOf[Timezone])
-    xst.useAttributeFor("id", classOf[Link])
-    xst.useAttributeFor("url", classOf[Link])
-    xst.useAttributeFor("rise", classOf[Sun])
-    xst.useAttributeFor("set", classOf[Sun])
-    xst.useAttributeFor("utcoffsetMinutes", classOf[Timezone]) */
   }
   
   def getLocationForecast(request: YrRequest): Future[WeatherData] = {
