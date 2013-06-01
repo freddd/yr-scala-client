@@ -73,7 +73,7 @@ case class Meta(_lastupdate: String, _nextupdate: String) {
 case class Links(_links: ArrayList[Link]) {
   private var l = _links
 
-  def links = l.asScala
+  def links = l.asScala.toSeq
 
   override def toString = "[Links: links= " + links + "]"
 }
@@ -89,7 +89,7 @@ case class Links(_links: ArrayList[Link]) {
 class Tabular(_rows: ArrayList[Time]) {
   private var r = _rows
 
-  def rows = r.asScala
+  def rows = r.asScala.toSeq
 
   override def toString = "[Tabular: rows= " + rows + "]"
 }
