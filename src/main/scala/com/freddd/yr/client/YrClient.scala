@@ -8,18 +8,15 @@ import com.freddd.yr.models.Link
 import com.freddd.yr.models.Links
 import com.freddd.yr.models.Location
 import com.freddd.yr.models.Meta
-import com.freddd.yr.models.Observations
 import com.freddd.yr.models.Precipitation
 import com.freddd.yr.models.Pressure
 import com.freddd.yr.models.Sun
 import com.freddd.yr.models.Tabular
 import com.freddd.yr.models.Temperature
-import com.freddd.yr.models.Text
 import com.freddd.yr.models.Time
 import com.freddd.yr.models.Timezone
 import com.freddd.yr.models.Title
 import com.freddd.yr.models.WeatherData
-import com.freddd.yr.models.WeatherStation
 import com.freddd.yr.models.WindDirection
 import com.freddd.yr.models.WindSpeed
 import com.freddd.yr.models.YrRequest
@@ -48,14 +45,9 @@ class YrClient extends Logging{
     xst.alias("link", classOf[Link])
     xst.alias("meta", classOf[Meta])
     xst.alias("forecast", classOf[Forecast])
-    //xst.alias("observations", classOf[Observations])
     xst.alias("sun", classOf[Sun])
-    xst.alias("text", classOf[Text])
-    //xst.alias("weatherstation", classOf[WeatherStation])
-    //xst.addImplicitCollection(classOf[WeatherStation], "weatherstations")
     xst.alias("timezone", classOf[Timezone])
     xst.alias("forecast", classOf[Forecast])
-    xst.alias("text", classOf[Text])
     xst.alias("time", classOf[Time])
     xst.alias("title", classOf[Title])
     xst.alias("body", classOf[Body])
@@ -66,8 +58,12 @@ class YrClient extends Logging{
     xst.alias("windDirection", classOf[WindDirection])
     xst.alias("windSpeed", classOf[WindSpeed])
     xst.alias("temperature", classOf[Temperature])
-    xst.alias("pressure", classOf[Pressure])
+    xst.alias("pressure", classOf[Pressure]) 
     
+    //xst.alias("observations", classOf[Observations])
+    //xst.alias("text", classOf[Text])
+    //xst.alias("weatherstation", classOf[WeatherStation])
+    //xst.addImplicitCollection(classOf[WeatherStation], "weatherstations")
   }
   
   def getLocationForecast(request: YrRequest): Future[WeatherData] = {

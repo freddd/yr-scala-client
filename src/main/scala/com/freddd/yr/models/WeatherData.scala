@@ -12,15 +12,15 @@ case class Links(links: JList[Link])
 case class Meta(lastupdate: String, nextupdate: String)
 case class Location(name: String, locationType: String, country: String, timezone: Timezone, location: InnerLocation)
 case class Credit(link: Link)
-case class Forecast(text: Text, tabular: Tabular)
-case class Text(location: Location)
+case class Forecast(tabular: Tabular)
 case class Title(title: String)
 case class Body(body: String)
 case class Tabular(rows: JList[Time])
 
 // Currently not used
-case class Observations(weatherstations: JList[WeatherStation])
-case class WeatherStation(stno: Integer, sttype: String, name: String, distance: Double, lat: Double, source: String)
+//case class Observations(weatherstations: JList[WeatherStation])
+//case class WeatherStation(stno: Integer, sttype: String, name: String, distance: Double, lat: Double, source: String)
+//case class Text(location: Location)
 
 class Timezone(_id: String, _utcoffsetMinutes: String){
   @XStreamAsAttribute
@@ -114,8 +114,12 @@ class WindDirection(_deg: Double, _code: String, _name: String, _time: String){
   var code = _code
   @XStreamAsAttribute
   var name = _name
+  
+  @XStreamAlias("time")
   @XStreamAsAttribute
-  var time: LocalDateTime = LocalDateTime.parse(_time)
+  var t = _time
+  
+  def time = LocalDateTime.parse(t)
   
   override def toString = "[WindDirection: deg= "+deg+" code= "+ code +" name= "+ name +" time= "+ time +"]"
 }
@@ -125,8 +129,12 @@ class WindSpeed(_mps: Double, _name: String, _time: String){
   var mps = _mps
   @XStreamAsAttribute
   var name = _name
+  
+  @XStreamAlias("time")
   @XStreamAsAttribute
-  var time: LocalDateTime = LocalDateTime.parse(_time)
+  var t = _time
+  
+  def time = LocalDateTime.parse(t)
   
   override def toString = "[WindSpeed: mps= "+mps+" name= "+ name +" time= "+ time +"]"
 }
@@ -136,8 +144,12 @@ class Temperature(_unit: String, _value: Integer, _time: String){
   var unit = _unit
   @XStreamAsAttribute
   var value = _value
+  
+  @XStreamAlias("time")
   @XStreamAsAttribute
-  var time: LocalDateTime = LocalDateTime.parse(_time)
+  var t = _time
+  
+  def time = LocalDateTime.parse(t)
   
   override def toString = "[Temperature: unit= "+unit+" value= "+ value +" time= "+ time +"]"
 }
@@ -159,11 +171,11 @@ class Symbol(_number: Integer, _name: String, _variable: String, _time: String){
   @XStreamAsAttribute
   var name = _name
   
-  
+  @XStreamAlias("time")
   @XStreamAsAttribute
   var t = _time
   
-  def time = Option(LocalDateTime.parse(t))
+  def time = LocalDateTime.parse(t)
   
   override def toString = "[Symbol: number= "+number+" variable= "+ variable +" name= "+ name +" time= "+ time +"]"
 }
