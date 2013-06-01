@@ -12,7 +12,7 @@ class YrClientTest extends FunSuite{
   
   test("yr test getLocationForecast"){
     client.getLocationForecast(new YrRequest("Sweden", "Stockholm", "Stockholm")) onComplete {
-      case Success(data) => assert(data.location.country.equals("Sweden"))
+      case Success(data) => println(data);assert(data.location.country.equals("Sweden"));
       case Failure(t) => assert(false)
     }
   }  

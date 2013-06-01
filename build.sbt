@@ -1,6 +1,5 @@
 import sbt._
 
-/* basic project info */
 name := "yr-scala-client"
 
 organization := "com.freddd"

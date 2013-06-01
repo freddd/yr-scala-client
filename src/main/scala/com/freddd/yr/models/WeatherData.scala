@@ -8,8 +8,6 @@ import com.thoughtworks.xstream.annotations.XStreamAlias
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute
 
 case class WeatherData(location: Location, credit: Credit, meta: Meta, links: Links, sun: Sun, forecast: Forecast)
-case class Observations(weatherStations: Seq[WeatherStation])
-case class WeatherStation(stno: Integer, sttype: String, name: String, distance: Double, lat: Double, source: String)
 case class Links(links: JList[Link])
 case class Meta(lastupdate: String, nextupdate: String)
 case class Location(name: String, locationType: String, country: String, timezone: Timezone, location: InnerLocation)
@@ -19,6 +17,10 @@ case class Text(location: Location)
 case class Title(title: String)
 case class Body(body: String)
 case class Tabular(rows: JList[Time])
+
+// Currently not used
+case class Observations(weatherstations: JList[WeatherStation])
+case class WeatherStation(stno: Integer, sttype: String, name: String, distance: Double, lat: Double, source: String)
 
 class Timezone(_id: String, _utcoffsetMinutes: String){
   @XStreamAsAttribute
@@ -30,32 +32,59 @@ class Timezone(_id: String, _utcoffsetMinutes: String){
 }
 
 class Link(_text: String, _url:String, _id: String){
+  @XStreamAlias("id")
   @XStreamAsAttribute
-  var id = _id
+  private var i = _id
+  
   @XStreamAsAttribute
   var url = _url
+  
+  @XStreamAlias("text")
   @XStreamAsAttribute
-  var text = _text
+  private var t = _text
+  
+  def id = Option(i)
+  def text = Option(t)
   
   override def toString = "[Link: id= "+id+" url= "+ url + " text= "+ text +"]"
 }
 
+/**
+ * Sunrise and sunset
+ */
 class Sun(_rise: String, _set: String){
+  
+  @XStreamAlias("rise")
   @XStreamAsAttribute
-  var rise: LocalDateTime = LocalDateTime.parse(_rise)
+  private var r = _rise
+  
+  @XStreamAlias("set")
   @XStreamAsAttribute
-  var set: LocalDateTime = LocalDateTime.parse(_set)
+  private var s = _set
+  
+  def rise = LocalDateTime.parse(r)
+  def set = LocalDateTime.parse(s)
   
   override def toString = "[Sun: rise= "+rise+" set= "+ set +"]"
 }
 
-class Time(_symbol: Symbol, _precipitation: Precipitation, _windDirection: WindDirection, _windSpeed: WindSpeed, _temperature: Temperature, _pressure: Pressure, _from: String, _to: String, _period: String){
+class Time(_symbol: Symbol, _precipitation: Precipitation, _windDirection: WindDirection, _windSpeed: WindSpeed, _temperature: Temperature, _pressure: Pressure, _from: String, _to: String, _period: Integer){
+  
+  @XStreamAlias("from")
   @XStreamAsAttribute
-  var from: LocalDateTime = LocalDateTime.parse(_from)
+  private var f = _from
+  
+  @XStreamAlias("to")
   @XStreamAsAttribute
-  var to: LocalDateTime = LocalDateTime.parse(_to)
+  private var t = _to
+  
+  @XStreamAlias("period")
   @XStreamAsAttribute
-  var period = _period
+  private var p = _period
+  
+  def period = Option(p)
+  def from = LocalDateTime.parse(f)
+  def to = LocalDateTime.parse(t)
   
   var symbol = _symbol
   var precipitation = _precipitation
@@ -129,8 +158,12 @@ class Symbol(_number: Integer, _name: String, _variable: String, _time: String){
   var variable = _variable
   @XStreamAsAttribute
   var name = _name
+  
+  
   @XStreamAsAttribute
-  var time: LocalDateTime = LocalDateTime.parse(_time)
+  var t = _time
+  
+  def time = Option(LocalDateTime.parse(t))
   
   override def toString = "[Symbol: number= "+number+" variable= "+ variable +" name= "+ name +" time= "+ time +"]"
 }

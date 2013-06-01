@@ -33,11 +33,11 @@ import dispatch.Future
 import net.mixedbits.tools.XStreamConversions
 
 class YrClient extends Logging{
-  val caller = new Caller
-  val xst = XStreamConversions(new XStream(new StaxDriver()))
+  private val caller = new Caller
+  private val xst = XStreamConversions(new XStream(new StaxDriver()))
   initXStream()
   
-  def initXStream(){
+  private def initXStream(){
     xst.autodetectAnnotations(true);
     xst.alias("weatherdata", classOf[WeatherData])
     xst.alias("location", classOf[Location])
@@ -48,10 +48,11 @@ class YrClient extends Logging{
     xst.alias("link", classOf[Link])
     xst.alias("meta", classOf[Meta])
     xst.alias("forecast", classOf[Forecast])
-    xst.alias("observations", classOf[Observations])
+    //xst.alias("observations", classOf[Observations])
     xst.alias("sun", classOf[Sun])
     xst.alias("text", classOf[Text])
-    xst.alias("weatherstation", classOf[WeatherStation])
+    //xst.alias("weatherstation", classOf[WeatherStation])
+    //xst.addImplicitCollection(classOf[WeatherStation], "weatherstations")
     xst.alias("timezone", classOf[Timezone])
     xst.alias("forecast", classOf[Forecast])
     xst.alias("text", classOf[Text])
