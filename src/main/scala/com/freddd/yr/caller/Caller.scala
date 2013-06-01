@@ -5,6 +5,9 @@ import dispatch.Defaults._
 import com.typesafe.scalalogging.slf4j.Logging
 import com.freddd.yr.models.YrRequest
 
+/**
+ * Doing the actual calls
+ */
 class Caller extends Logging{
   
 	/**

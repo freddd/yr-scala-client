@@ -1,7 +1,6 @@
 package com.freddd.yr.client
 
 import com.freddd.yr.caller.Caller
-import com.freddd.yr.models.Body
 import com.freddd.yr.models.Credit
 import com.freddd.yr.models.Forecast
 import com.freddd.yr.models.Link
@@ -15,7 +14,6 @@ import com.freddd.yr.models.Tabular
 import com.freddd.yr.models.Temperature
 import com.freddd.yr.models.Time
 import com.freddd.yr.models.Timezone
-import com.freddd.yr.models.Title
 import com.freddd.yr.models.WeatherData
 import com.freddd.yr.models.WindDirection
 import com.freddd.yr.models.WindSpeed
@@ -29,11 +27,17 @@ import dispatch.Future
 import dispatch.Future
 import net.mixedbits.tools.XStreamConversions
 
+/**
+ * The client used by applications.
+ */
 class YrClient extends Logging{
   private val caller = new Caller
   private val xst = XStreamConversions(new XStream(new StaxDriver()))
   initXStream()
   
+  /**
+   * Initiating xstream, doing all of the mapping.
+   */
   private def initXStream(){
     xst.autodetectAnnotations(true);
     xst.alias("weatherdata", classOf[WeatherData])
@@ -49,28 +53,31 @@ class YrClient extends Logging{
     xst.alias("timezone", classOf[Timezone])
     xst.alias("forecast", classOf[Forecast])
     xst.alias("time", classOf[Time])
-    xst.alias("title", classOf[Title])
-    xst.alias("body", classOf[Body])
     xst.alias("tabular", classOf[Tabular])
-    xst.addImplicitCollection(classOf[Tabular], "rows")
+    xst.addImplicitCollection(classOf[Tabular], "r")
     xst.alias("symbol", classOf[Symbol])
     xst.alias("precipitation", classOf[Precipitation])
     xst.alias("windDirection", classOf[WindDirection])
     xst.alias("windSpeed", classOf[WindSpeed])
     xst.alias("temperature", classOf[Temperature])
     xst.alias("pressure", classOf[Pressure]) 
-    
-    //xst.alias("observations", classOf[Observations])
-    //xst.alias("text", classOf[Text])
-    //xst.alias("weatherstation", classOf[WeatherStation])
-    //xst.addImplicitCollection(classOf[WeatherStation], "weatherstations")
   }
   
+  /**
+   * Doing the "forecast" call to yr.
+   * @param request - data needed to do the request to yr
+   * @return a future containing the WeatherData.
+   */
   def getLocationForecast(request: YrRequest): Future[WeatherData] = {
     val result = caller.call(caller.Constants.FORECAST, request)
     result.map(resp => xst.fromXML(resp).asInstanceOf[WeatherData])
   }
   
+  /**
+   * Doing the "byHour" call to yr.
+   * @param request - data needed to do the request to yr
+   * @return a future containing the WeatherData.
+   */
   def getByHour(request: YrRequest): Future[WeatherData] = {
     val result = caller.call(caller.Constants.BY_HOUR, request)
     result.map(resp => xst.fromXML(resp).asInstanceOf[WeatherData])
