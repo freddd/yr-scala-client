@@ -48,14 +48,14 @@ case class Forecast(tabular: Tabular)
  *  <nextupdate>2013-06-01T20:00:00</nextupdate>
  * </meta>
  */
-case class Meta(_lastupdate: String, _nextupdate: String) {
-  @XStreamAsAttribute
-  var lu = _lastupdate
-  @XStreamAsAttribute
-  var nu = _nextupdate
+case class Meta(lastupdate: String, nextupdate: String) {
+  //@XStreamAsAttribute
+  //var lu = _lastupdate
+  //@XStreamAsAttribute
+  //var nu = _nextupdate
 
-  def nextupdate = LocalDateTime.parse(nu)
-  def lastupdate = LocalDateTime.parse(lu)
+  //def nextupdate = LocalDateTime.parse(_nextupdate)
+  //def lastupdate = LocalDateTime.parse(_lastupdate)
 
   override def toString = "[Meta: nextupdate= " + nextupdate + " lastupdate= " + lastupdate + "]"
 }

@@ -3,7 +3,9 @@ import Keys._
 
 object build extends Build {
 
-  val gcsettings = Defaults.defaultSettings
+  val gcsettings = Defaults.defaultSettings ++ Seq(
+      scalaVersion := "2.10.0"
+   )
 
   val gc = TaskKey[Unit]("gc", "runs garbage collector")
   val gcTask = gc := {

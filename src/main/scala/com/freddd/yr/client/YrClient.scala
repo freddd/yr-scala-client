@@ -45,7 +45,7 @@ class YrClient extends Logging{
     xst.aliasField("type", classOf[Location], "locationType");
     xst.alias("credit", classOf[Credit])
     xst.alias("links", classOf[Links])
-    xst.addImplicitCollection(classOf[Links], "links") 
+    xst.addImplicitCollection(classOf[Links], "l") 
     xst.alias("link", classOf[Link])
     xst.alias("meta", classOf[Meta])
     xst.alias("forecast", classOf[Forecast])
