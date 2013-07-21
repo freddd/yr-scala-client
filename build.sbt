@@ -11,7 +11,7 @@ homepage := Some(url("https://github.com/freddd/yr-scala-client"))
 startYear := Some(2013)
 
 licenses := Seq(
-  ("GPLv3", url("http://www.gnu.org/licenses/gpl-3.0.txt"))
+  ("MIT", url("http://opensource.org/licenses/MIT"))
 )
 
 scmInfo := Some(
@@ -74,8 +74,6 @@ parallelExecution in Test := false
 
 /* sbt behavior */
 logLevel in compile := Level.Warn
-
-traceLevel := 5
 
 offline := false
 
