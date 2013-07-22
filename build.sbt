@@ -2,7 +2,7 @@ import sbt._
 
 name := "yr-scala-client"
 
-organization := "com.freddd"
+organization := "freddd"
 
 version := "1.0.0-SNAPSHOT"
 
