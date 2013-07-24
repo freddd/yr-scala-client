@@ -4,7 +4,7 @@ name := "yr-scala-client"
 
 organization := "freddd"
 
-version := "1.0.2-SNAPSHOT"
+version := "1.0.3-SNAPSHOT"
 
 homepage := Some(url("https://github.com/freddd/yr-scala-client"))
 
