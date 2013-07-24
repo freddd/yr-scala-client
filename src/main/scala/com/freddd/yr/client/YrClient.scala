@@ -68,9 +68,9 @@ class YrClient extends Logging{
    * @param request - data needed to do the request to yr
    * @return a future containing the WeatherData.
    */
-  def getLocationForecast(request: YrRequest): Future[WeatherData] = {
+  def getLocationForecast(request: YrRequest): Future[Option[WeatherData]] = {
     val result = caller.call(caller.Constants.FORECAST, request)
-    result.map(resp => xst.fromXML(resp).asInstanceOf[WeatherData])
+    result.map(resp => sanitize(resp))
   }
   
   /**
@@ -78,9 +78,18 @@ class YrClient extends Logging{
    * @param request - data needed to do the request to yr
    * @return a future containing the WeatherData.
    */
-  def getByHour(request: YrRequest): Future[WeatherData] = {
+  def getByHour(request: YrRequest): Future[Option[WeatherData]] = {
     val result = caller.call(caller.Constants.BY_HOUR, request)
-    result.map(resp => xst.fromXML(resp).asInstanceOf[WeatherData])
+    result.map(resp => sanitize(resp))
+  }
+  
+  /**
+   * Makes sure that an option is always returned (even if we get a 404 or similar).
+   * @param response - an option that might be containing the response from the call
+   */
+  private def sanitize(response: Option[String]) = response match{
+    case Some(_) => Option(xst.fromXML(response.get).asInstanceOf[WeatherData])
+    case None => logger.error("YrClient - something went wrong, weather cannot be retrieved");None
   }
   
 }

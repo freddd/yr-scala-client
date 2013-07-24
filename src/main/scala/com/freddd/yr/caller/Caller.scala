@@ -16,13 +16,13 @@ class Caller extends Logging{
 	 * @param parameters - any additional parameters e.g. lat, lon
 	 * @return returning a future containing xml.
 	 */
-	def call(yrAction: String, request: YrRequest): Future[String] = {
+	def call(yrAction: String, request: YrRequest): Future[Option[String]] = {
 	  val base = Constants.BASE + request.country + "/"  + request.state + "/" + request.city + "/" + yrAction + Constants.FORMAT
 	  val call = url(base).GET
 
 	  logger.info("url: "+call.url)
 	  
-	  Http(call OK as.String)
+	  Http(call OK as.String).option
 	}
 	
   object Constants {
