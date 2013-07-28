@@ -180,12 +180,12 @@ class Time(_symbol: Symbol, _precipitation: Precipitation, _windDirection: WindD
   def from = LocalDateTime.parse(f)
   def to = LocalDateTime.parse(t)
 
-  var symbol = _symbol
-  var precipitation = _precipitation
-  var windDirection = _windDirection
-  var windSpeed = _windSpeed
-  var temperature = _temperature
-  var pressure = _pressure
+  def symbol = _symbol
+  def precipitation = _precipitation
+  def windDirection = _windDirection
+  def windSpeed = _windSpeed
+  def temperature = _temperature
+  def pressure = _pressure
 
   override def toString = "[Time: from= " + from + " to= " + to + " period= " + period + "]"
 }
